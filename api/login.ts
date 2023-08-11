@@ -4,10 +4,8 @@ import { connectToDb } from '../lib/db';
 import jwt from 'jsonwebtoken';
 
 module.exports = async (req: VercelRequest, res: VercelResponse) => {
-    if(req.method === 'OPTIONS') { return res.status(200).json(({ body: "OK" })) }
-    const { username, password } = req.body || {};
-    // const username = 'pool';
-    // const password = '12345';
+    if(req.method === 'OPTIONS') { return res.json(({ body: "OK" })) }
+    const { username, password } = req.body;
     if (!username || !password) {
         res.json({message:'参数错误'});
     }
