@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 module.exports = async (req: VercelRequest, res: VercelResponse) => {
     if(req.method === 'OPTIONS') { return res.status(200).json(({ body: "OK" })) }
-    const { username, password } = req.body;
+    const { username, password } = req.body || {};
     // const username = 'pool';
     // const password = '12345';
     if (!username || !password) {
