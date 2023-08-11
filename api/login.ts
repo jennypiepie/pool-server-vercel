@@ -3,6 +3,7 @@ import { Db } from 'mongodb'
 import { connectToDb } from '../lib/db';
 
 module.exports = async (req: VercelRequest, res: VercelResponse) => {
+    if(req.method === 'OPTIONS') { return res.status(200).json(({ body: "OK" })) }
     const { username, password } = req.body;
     if (!username || !password) {
         res.status(414).send('参数错误');
