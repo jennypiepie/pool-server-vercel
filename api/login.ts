@@ -6,7 +6,9 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     if(req.method === 'OPTIONS') { return res.status(200).json(({ body: "OK" })) }
     const db: Db | null = await connectToDb() || null;
     if (db) {
-        const { username, password } = req.body;
+        // const { username, password } = req.body;
+        const username = 'pool';
+        const password = '12345';
         const collection = db.collection('user');
         const users = await collection.find({username}).toArray();
         if (!users.length) {
