@@ -1,6 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { Db } from 'mongodb'
 import { connectToDb } from '../lib/db';
+const jwt = require('jsonwebtoken');
 
 module.exports = async (req: VercelRequest, res: VercelResponse) => {
     if(req.method === 'OPTIONS') { return res.status(200).json(({ body: "OK" })) }
@@ -19,8 +20,17 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
             if (password !== users[0].password) {
                 res.json({message:'密码错误'});
             } else {
-                const result = Object.assign(users[0],{message:"登录成功"})
-                res.status(200).json(result);
+                const token = jwt.sign(
+                    { username, password }, //  携带信息(根据username和password生成的密文)
+                    'jennypie',     //秘钥
+                    { expiresIn: 24 * 60 *60 * 1000 }   //有效期
+                );
+                collection.updateOne(
+                    { username },
+                    { $set: { token } }
+                );
+                const result = Object.assign(users[0],{token,message:"登录成功"})
+                res.json(result);
             }
         }
     } else {

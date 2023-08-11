@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "jsonwebtoken": "^9.0.1",
     "mongodb": "^5.7.0",
     "typescript": "^5.1.6"
   },

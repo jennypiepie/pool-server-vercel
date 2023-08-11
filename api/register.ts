@@ -9,10 +9,10 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
         const collection = db.collection('user');
         const count = await collection.countDocuments({ username });
         if (count>0) {
-            res.send('该用户已存在');
+            res.json({message:'该用户已存在'});
         } else {
             await collection.insertOne(req.body);
-            res.status(200).json(count);
+            res.json(count);
         }
     }
 }
