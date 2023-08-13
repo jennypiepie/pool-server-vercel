@@ -12,8 +12,8 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
         if (count>0) {
             res.json({message:'该用户已存在'});
         } else {
-            await collection.insertOne(req.body);
-            res.json(count);
+            await collection.insertOne(Object.assign(req.body,{outfit:'Waitress,White'}));
+            res.json({message:'注册成功'});
         }
     }
 }
