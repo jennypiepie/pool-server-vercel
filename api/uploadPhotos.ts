@@ -8,7 +8,7 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     if (db) {
         const { username, base64 } = req.body;
         const collection = db.collection('photos');
-        collection.insertOne({ base64, user: username });
+        await collection.insertOne({ base64, user: username });
         res.json({ message: '添加成功' });
     }
 }
