@@ -6,9 +6,9 @@ module.exports = async (req: VercelRequest, res: VercelResponse) => {
     if (req.method === 'OPTIONS') { return res.json(({ body: "OK" })) }
     const db: Db | null = await connectToDb() || null;
     if (db) {
-        const { username, base64, name } = req.body;
+        const { name } = req.body;
         const collection = db.collection('photos');
-        await collection.insertOne({ base64, user: username, name });
-        res.json({ message: '添加成功' });
+        await collection.deleteOne({ name });
+        res.json({ message: '删除成功' });
     }
 }
